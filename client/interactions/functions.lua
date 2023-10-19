@@ -1,48 +1,53 @@
-function getInteractionName(interaction)
-    if Config.Interactions[string.lower(interaction)] == nil then
-        return interaction
+function getinteractionname(interaction)
+    interaction = interaction:match("%[\"(.-)\"%]")
+    for k, v in pairs(Config.Interactions) do
+        -- print(k .. "should be not the same as" .. interaction2)
+        if k == interaction then
+            return v.name
+        else
+
+        end
     end
-    return Config.Interactions[string.lower(interaction)].name
 end
 
-function getInteractionEventType(interaction)
+function getinteractioneventtype(interaction)
     if Config.Interactions[string.lower(interaction)] == nil then
         return false
     end
     return Config.Interactions[string.lower(interaction)].eventtype
 end
 
-function getInteractionEventName(interaction)
+function getinteractioneventname(interaction)
     if Config.Interactions[string.lower(interaction)] == nil then
         return "ludaro_jobs:interactionserror"
     end
     return Config.Interactions[string.lower(interaction)].eventname
 end
 
-function getInteractionIcon(interaction)
+function getinteractionicon(interaction)
     if Config.Interactions[string.lower(interaction)] == nil then
         return interaction
     end
     return Config.Interactions[string.lower(interaction)].icon
 end
 
-function getEventArgs(interaction)
+function geteventargs(interaction)
     if Config.Interactions[string.lower(interaction)] == nil then
         return false
     end
     return Config.Interactions[string.lower(interaction)].eventargs
 end
 
-function getPrio(interaction)
+function getprio(interaction)
     if Config.Interactions[string.lower(interaction)] == nil then
         return false
     end
     return Config.Interactions[string.lower(interaction)].prio
 end
 
-function getAllinteractions()
+function getallinteractions()
     local interactions = {}
-    for k, _ in pairs(Config.Interactions) do
+    for k, v in pairs(Config.Interactions) do
         table.insert(interactions, k)
     end
     return interactions

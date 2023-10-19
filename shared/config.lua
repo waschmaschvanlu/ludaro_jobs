@@ -6,6 +6,25 @@ Config.AdminGroups = { "admin", "owner" }
 Config.AutoSQL = true               -- makes all the sql automaticly upon startup if it doesnt exist
 Config.Keys = { interactions = "F6" } -- this is client bound and will only set it once upon joining first when the script hasnt ben loaded in any other server! editable iongame in the settings menu
 Config.Commands = { adminmenu = "ljob", interactions = "interactionss", }
+
+Config.Marker = true
+Config.DefaultMarker = { -- this is the default marker if you dont want to use the marker in the job config
+  markerType = 1,
+  scalex = 1.0,
+  scaley = 1.0,
+  scalez = 1.0,
+  xoffset = 0.0,
+  yoffset = 0.0,
+  zoffset = 0.0,
+  red = 255,
+  green = 0,
+  blue = 0,
+  alpha = 100,
+  bobupanddown = false,
+  facecamera = false,
+  markerenabled = true,
+}
+Config.NPC = true
 Config.Interactions = {
   ["cuff"] = {
     prio = 1,                   -- the prio of the interaction in the menu ( 1 = its on the top)
@@ -54,6 +73,31 @@ Config.Translation = {
     ["nointeractions"] = "Dein Beruf hat keine Interaktionen",
     ["loading"] = "Lade Jobs.. Bitte habe ein wenig geduld..",
     ["bossmenu"] = "Boss-Menü",
+    ["bossmenucoords"] = "Boss-Menü Koordinaten",
+    ["marker"] = "Marker",
+    ["markerid"] = "Marker-ID",
+    ["NPC"] = "NPC",
+    ["scale"] = "Größe",
+    ["offset"] = "Koordinaten-Versetzung",
+    ["color"] = "Farbe",
+    ["bobupanddown"] = "Hoch und Runter wobben",
+    ["facecamera"] = "Zeigt zur Kamera",
+    ["scalex"] = "Größe X",
+    ["scaley"] = "Größe Y",
+    ["scalez"] = "Größe Z",
+    ["xoffset"] = "Versetzung X",
+    ["yoffset"] = "Versetzung Y",
+    ["zoffset"] = "Versetzung Z",
+    ["red"] = "Rot",
+    ["green"] = "Grün",
+    ["blue"] = "Blau",
+    ["alpha"] = "Sichtbarkeit",
+    ["markerenabled"] = "Marker Ein/Ausschalten",
+    ["model"] = "NPC-Modell",
+    ["heading"] = "NPC-Kopfposition",
+    ["npcenabled"] = "NPC Ein/Ausschalten",
+
+
 
   },
   ['en'] = {
@@ -81,7 +125,6 @@ Config.Translation = {
     ["createsociety"] = "Create Society",
     ["insertmoney"] = "Geld eingeben:",
     ["insertid"] = "Insert ID:",
-
   }
 }
 Config.Notify = function(txt, source)

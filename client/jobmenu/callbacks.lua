@@ -1,32 +1,31 @@
-function doesJobExist(job)
-    return lib.callback.await('ludaro_jobs:doesJobExist', false, job)
+function doesjobexist(job)
+    return lib.callback.await('ludaro_jobs:doesjobexist', false, job)
 end
 
-function getJobName(id)
-    return lib.callback.await('ludaro_jobs:getJobName', false, id)
+function getjobname(id)
+    return lib.callback.await('ludaro_jobs:getjobname', false, id)
 end
 
-function getJobLabel(id)
-    return lib.callback.await('ludaro_jobs:getJobLabel', false, id)
+function getjoblabel(id)
+    return lib.callback.await('ludaro_jobs:getjoblabel', false, id)
 end
 
-function getGradeName(id)
-    return lib.callback.await('ludaro_jobs:getGradeName', false, id)
+function getgradename(id)
+    return lib.callback.await('ludaro_jobs:getgradename', false, id)
 end
 
--- QUESTION: Why tf double functions?
-function getGradeName(id)
-    return lib.callback.await('ludaro_jobs:getGradelabel', false, id)
+function getgradename(id)
+    return lib.callback.await('ludaro_jobs:getgradelabel', false, id)
 end
 
-function getGrade(id)
-    return lib.callback.await('ludaro_jobs:getGrade', false, id)
+function getgrade(id)
+    return lib.callback.await('ludaro_jobs:getgrade', false, id)
 end
 
-function getJobs()
-    return lib.callback.await('ludaro_jobs:getJobs', false)
+function getjobs()
+    return lib.callback.await('ludaro_jobs:getjobs', false)
 end
 
-function getJobInfo(job)
-    return lib.callback.await('ludaro_jobs:getJobInfo', false, job)
+function getjobinfo(job)
+    return lib.callback.await('ludaro_jobs:getjobinfo', false, job)
 end

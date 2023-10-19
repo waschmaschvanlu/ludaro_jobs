@@ -1,4 +1,3 @@
--- TODO: make code readable, not everything in one file
 if Config.Menu == "ox_lib" then
     -- TO BE DONE
 end
@@ -21,11 +20,11 @@ if Config.Menu == "NativeUI" then
         end
     end)
 
-    --print(ESX.DumpTable(jobs))
+    ----(ESX.DumpTable(jobs))
     deletedjobs = {}
     function openadminmenu()
         menuclosed = false
-        jobs = getJobs()
+        jobs = getjobs()
         number = 1
         if not _menuPool:IsAnyMenuOpen() then
             mainmenu = NativeUI.CreateMenu(locale("adminmenu"), "")
@@ -34,46 +33,14 @@ if Config.Menu == "NativeUI" then
             _menuPool:MouseControlsEnabled(false)
             _menuPool:MouseEdgeEnabled(false)
             _menuPool:ControlDisablingEnabled(false)
-
-
-            lib.showTextUI(locale("loading"), {
-                position = "top-center",
-                icon = 'hand',
-                style = {
-                    borderRadius = 0,
-                    backgroundColor = 'black',
-                    color = 'white'
-                }
-            })
-
-
             changestuff = {}
 
-            done = false
             for k, v in pairs(jobs) do
-                v.whitelist = false or lib.callback.await('ludaro_jobs:getwhitelist', false, v.name)
-                v.society = false or lib.callback.await('ludaro_jobs:getSocietyAccount', false, v.name)
-                v.jobinfo = getJobInfo(v.label)
-                if k == #jobs then
-                    done = true
-                end
-            end
+                --(v.jobinfo)
 
 
-
-            while not done do
-                Citizen.Wait(1)
-            end
-
-
-
-
-
-
-
-            for k, v in pairs(jobs) do
                 if lib.table.contains(deletedjobs, v.name) then
-                    debug2("job is deleted")
+                    debug2("job is deleted " .. v.name)
                 else
                     jobsmenu = _menuPool:AddSubMenu(mainmenu, v.label, v.name)
                     _menuPool:RefreshIndex()
@@ -87,7 +54,6 @@ if Config.Menu == "NativeUI" then
 
 
                     jobsmenu.SubMenu.OnMenuClosed = function(menu)
-                        print(#changestuff)
                         if #changestuff > 0 then
                             -- do something
                             local alert = lib.alertDialog({
@@ -99,7 +65,7 @@ if Config.Menu == "NativeUI" then
                             if alert == "confirm" then
                                 for k, v in pairs(changestuff) do
                                     if v.name then
-                                        print("ah")
+                                        --("ah")
                                         TriggerServerEvent("ludaro_jobs:changename", v.job, v.name)
                                     end
                                     if v.label then
@@ -277,8 +243,8 @@ if Config.Menu == "NativeUI" then
                             interactionss = json.decode(interactionss)
                             local foundMatch = false
                             for z, u in pairs(interactionss) do
-                                --print(getInteractionName(u), inter.name)
-                                if getInteractionName(u) == inter.name then
+                                ----(getinteractionname(u), inter.name)
+                                if getinteractionname(u) == inter.name then
                                     foundMatch = true
                                     break
                                 end
@@ -347,10 +313,15 @@ if Config.Menu == "NativeUI" then
 
                         societymoney.Activated = function(sender, index)
                             newsocietymoney = KeyboardInput(locale("insertmoney"), "", 30)
+                            if newsocietymoney == nil then
+                                newsocietymoney = society
+                            end
                             societymoney:RightLabel(newsocietymoney .. locale("$"))
                         end
                         jobsmenu.SubMenu:AddItem(societymoney)
                     end
+
+
 
                     --  coords2 = NativeUI.CreateItem(locale("coords"), VectorToString(GetEntityCoords(PlayerPedId())))
                     --     coords2.Activated = function(sender, index)
@@ -359,19 +330,306 @@ if Config.Menu == "NativeUI" then
                     --     end
                     --     jobsmenu.SubMenu:AddItem(coords2)
 
-                    bossmenu = NativeUI.CreateItem(locale("bossmenu"), "")
-                    jobsmenu.SubMenu:AddItem(bossmenu)
-                    jobinfoo = json.decode(v.jobinfo)
-                    if jobinfoo.bossmenu then
-                        jobinfo = json.decode(jobinfo)
-                        bossmenucoords = VectorToString(vector3(jobinfoo.bossmenu.x, jobinfoo.bossmenu.y,
-                            jobinfoo.bossmenu.z))
-                    else
-                        bossmenucoords = "none"
+                    bossmenumenu = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("bossmenu"), "")
+                    bossmenumenu.Item:RightLabel(">")
+                    bossmenu = NativeUI.CreateItem(locale("bossmenucoords"), "")
+                    bossmenumenu.SubMenu:AddItem(bossmenu)
+                    jobinfoo = "[]" or json.decode(v.jobinfo)
+                    if Config.Marker then
+                        marker = _menuPool:AddSubMenu(bossmenumenu.SubMenu, locale("marker"), "")
+                        marker.Item:RightLabel(">")
+
+                        markertypes = {}
+                        for i = 1, 43 do
+                            table.insert(markertypes, i)
+                        end
+
+                        colors = {}
+                        for i = 1, 255 do
+                            table.insert(colors, i)
+                        end
+
+                        markertype = NativeUI.CreateListItem(locale("markerid"), markertypes, 1, "")
+                        marker.SubMenu:AddItem(markertype)
+
+                        scale = _menuPool:AddSubMenu(marker.SubMenu, locale("scale"), "")
+                        scale.Item:RightLabel(">")
+
+                        scalex = NativeUI.CreateItem(locale("scalex"), "")
+                        scale.SubMenu:AddItem(scalex)
+                        scaley = NativeUI.CreateItem(locale("scaley"), "")
+                        scale.SubMenu:AddItem(scaley)
+                        scalez = NativeUI.CreateItem(locale("scalez"), "")
+                        scale.SubMenu:AddItem(scalez)
+
+
+                        offset = _menuPool:AddSubMenu(marker.SubMenu, locale("offset"), "")
+                        offset.Item:RightLabel(">")
+
+                        xoffset = NativeUI.CreateItem(locale("xoffset"), "")
+                        offset.SubMenu:AddItem(xoffset)
+                        yoffset = NativeUI.CreateItem(locale("yoffset"), "")
+                        offset.SubMenu:AddItem(yoffset)
+                        zoffset = NativeUI.CreateItem(locale("zoffset"), "")
+                        offset.SubMenu:AddItem(zoffset)
+
+
+                        color = _menuPool:AddSubMenu(marker.SubMenu, locale("color"), "")
+                        color.Item:RightLabel(">")
+                        red = NativeUI.CreateListItem(locale("red"), colors, 255 or jobinfoo.markerred, "")
+                        color.SubMenu:AddItem(red)
+                        green = NativeUI.CreateListItem(locale("green"), colors, 255 or jobinfoo.markergreen, "")
+                        color.SubMenu:AddItem(green)
+                        blue = NativeUI.CreateListItem(locale("blue"), colors, 255 or jobinfoo.markerblue, "")
+                        color.SubMenu:AddItem(blue)
+                        alpha = NativeUI.CreateListItem(locale("alpha"), colors, 255 or jobinfoo.markeralpha, "")
+                        color.SubMenu:AddItem(alpha)
+                        coloritem = NativeUI.CreateItem(locale("color"), "")
+
+                        -- here
+                        color.SubMenu.OnListChange = function(sender, index, number)
+                            if index.Base.Text._Text == locale("red") then
+                                local found = false
+                                for i, y in ipairs(changestuff) do
+                                    --(y.job, v.label, y.markerred)
+
+                                    if y.job == v.label and y.markerred ~= nil then
+                                        y.markerred = number
+                                        found = true
+                                    end
+                                end
+                                if not found then
+                                    table.insert(changestuff, { job = v.label, markerred = number })
+                                end
+                            elseif index.Base.Text._Text == locale("green") then
+                                local found = false
+                                for i, y in ipairs(changestuff) do
+                                    --   --(y.job == v.label and y.markergreen ~= nil)
+
+                                    if y.job == v.label and y.markergreen ~= nil then
+                                        -- --("ah")
+                                        y.markergreen = number
+                                        found = true
+                                    end
+                                end
+                                if not found then
+                                    table.insert(changestuff, { job = v.label, markergreen = number })
+                                end
+                            elseif index.Base.Text._Text == locale("blue") then
+                                local found = false
+                                for i, y in ipairs(changestuff) do
+                                    if y.job == v.label and y.markerblue ~= nil then
+                                        y.markerblue = number
+                                        found = true
+                                    end
+                                end
+                                if not found then
+                                    table.insert(changestuff, { job = v.label, markerblue = number })
+                                end
+                            elseif index.Base.Text._Text == locale("alpha") then
+                                local found = false
+                                for i, y in ipairs(changestuff) do
+                                    if y.job == v.label and y.markeralpha ~= nil then
+                                        y.markeralpha = alpha
+                                        found = true
+                                    end
+                                end
+                                if not found then
+                                    table.insert(changestuff, { job = v.label, markeralpha = number })
+                                end
+                            end
+                            --coloritem:SetTextHoveredColor(redindex or 255, greenindex or 255, blueindex or 255, alphaindex or 255)
+                        end
+
+
+
+
+
+                        -- marker.SubMenu:AddItem(red)
+                        -- marker.SubMenu:AddItem(green)
+                        -- marker.SubMenu:AddItem(blue)
+                        -- marker.SubMenu:AddItem(alpha)
+                        bobupanddown = NativeUI.CreateCheckboxItem(locale("bobupanddown"), false, "")
+                        marker.SubMenu:AddItem(bobupanddown)
+
+                        facecamera = NativeUI.CreateCheckboxItem(locale("facecamera"), false, "")
+                        marker.SubMenu:AddItem(facecamera)
+                        markerenabled = NativeUI.CreateCheckboxItem(locale("markerenabled"), false, "")
+                        marker.SubMenu:AddItem(markerenabled)
+                        bobupanddown.Checked = json.decode(v.jobinfo).markerbobupanddown or false
+                        facecamera.Checked = json.decode(v.jobinfo).markerfacecamera or false
+                        markerenabled.Checked = json.decode(v.ludaro_jobs_info).markerenabled or false
+
+                        marker.SubMenu.OnListChange = function(sender, index, number)
+                            table.insert(changestuff, { job = v.label, markerid = number })
+                        end
+
+                        scalex.Activated = function(sender, index)
+                            newscalex = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newscalex) ~= nil then
+                                index.Label.Text._Text = newscalex
+                                table.insert(changestuff, { job = v.label, scalex = newscalex })
+                                --("what")
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        scaley.Activated = function(sender, index)
+                            newscaley = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newscaley) ~= nil then
+                                index.Label.Text._Text = newscaley
+                                table.insert(changestuff, { job = v.label, scaley = newscaley })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        scalez.Activated = function(sender, index)
+                            newscalez = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newscalez) ~= nil then
+                                index.Label.Text._Text = newscalez
+                                table.insert(changestuff, { job = v.label, scalez = newscalez })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        xoffset.Activated = function(sender, index)
+                            newxoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newxoffset) ~= nil then
+                                index.Label.Text._Text = newxoffset
+                                table.insert(changestuff, { job = v.label, xoffset = newxoffset })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        yoffset.Activated = function(sender, index)
+                            newyoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newyoffset) ~= nil then
+                                index.Label.Text._Text = newyoffset
+                                table.insert(changestuff, { job = v.label, yoffset = newyoffset })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        zoffset.Activated = function(sender, index)
+                            newzoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newzoffset) ~= nil then
+                                index.Label.Text._Text = newzoffset
+                                table.insert(changestuff, { job = v.label, zoffset = newzoffset })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        bobupanddown.CheckboxEvent = function(menu, item, checked)
+                            table.insert(changestuff, { job = v.label, markerbobupanddown = checked })
+                        end
+
+                        -- rotate.CheckboxEvent = function(menu, item, checked)
+                        --     table.insert(changestuff, { job = v.label, markerrotate = checked})
+                        -- end
+
+                        facecamera.CheckboxEvent = function(menu, item, checked)
+                            table.insert(changestuff, { job = v.label, markerfacecamera = checked })
+                        end
+
+                        markerenabled.CheckboxEvent = function(menu, item, checked)
+                            table.insert(changestuff, { job = v.label, markerenabled = checked })
+                        end
+                    end
+                    if Config.NPC then
+                        npc = _menuPool:AddSubMenu(bossmenumenu.SubMenu, locale("NPC"), "")
+                        npc.Item:RightLabel(">")
+
+                        offset = _menuPool:AddSubMenu(npc.SubMenu, locale("offset"), "")
+                        offset.Item:RightLabel(">")
+
+                        xoffset = NativeUI.CreateItem(locale("xoffset"), "")
+                        offset.SubMenu:AddItem(xoffset)
+                        yoffset = NativeUI.CreateItem(locale("yoffset"), "")
+                        offset.SubMenu:AddItem(yoffset)
+                        zoffset = NativeUI.CreateItem(locale("zoffset"), "")
+                        offset.SubMenu:AddItem(zoffset)
+
+                        xoffset.Activated = function(sender, index)
+                            newxoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newxoffset) ~= nil then
+                                index.Label.Text._Text = newxoffset
+                                table.insert(changestuff, { job = v.label, xoffsetnpc = newxoffset })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        yoffset.Activated = function(sender, index)
+                            newyoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newyoffset) ~= nil then
+                                index.Label.Text._Text = newyoffset
+                                table.insert(changestuff, { job = v.label, yoffsetnpc = newyoffset })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        zoffset.Activated = function(sender, index)
+                            newzoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            if tonumber(newzoffset) ~= nil then
+                                index.Label.Text._Text = newzoffset
+                                table.insert(changestuff, { job = v.label, zoffsetnpc = newzoffset })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        model = NativeUI.CreateItem(locale("model"), "")
+                        npc.SubMenu:AddItem(model)
+                        model.Activated = function(sender, index)
+                            newmodel = KeyboardInput(locale("insertmodel"), "", 30)
+                            if tostring(newmodel) ~= nil then
+                                index.Label.Text._Text = newmodel
+                                table.insert(changestuff, { job = v.label, npcmodel = newmodel })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+
+                        heading = NativeUI.CreateItem(locale("heading"), "")
+                        npc.SubMenu:AddItem(heading)
+                        heading.Activated = function(sender, index)
+                            newheading = KeyboardInput(locale("insertheading"), "", 30)
+                            if tonumber(newheading) ~= nil then
+                                index.Label.Text._Text = newheading
+                                table.insert(changestuff, { job = v.label, npcheading = newheading })
+                            else
+                                Config.Notify(locale("nonumber"))
+                            end
+                        end
+
+                        npcenabled = NativeUI.CreateCheckboxItem(locale("npcenabled"), false, "")
+                        npc.SubMenu:AddItem(npcenabled)
+                        npcenabled.CheckboxEvent = function(menu, item, checked)
+                            table.insert(changestuff, { job = v.label, npcenabled = checked })
+                        end
+
+
+                        -- merken: xoffsetnpc, yoffsetnpc, zoffsetnpc, npcmodel, npcheading
                     end
 
-                    --print(bossmenucoords)
-                    bossmenu:RightLabel(bossmenucoords)
+
+
+                    ----(bossmenucoords)
+                    bossmenucoords_table = json.decode(v.jobinfo).bossmenu
+                    if type(bossmenucoords_table) == "table" then
+                        bossmenucoords = VectorToString(vector3(bossmenucoords_table.x, bossmenucoords_table.y,
+                            bossmenucoords_table.z))
+                        bossmenu:RightLabel(bossmenucoords)
+                    end
+
 
                     bossmenu.Activated = function(sender, index)
                         index.Label.Text._Text = VectorToString(GetEntityCoords(PlayerPedId()))
@@ -419,21 +677,107 @@ if Config.Menu == "NativeUI" then
                     confirm.SubMenu:AddItem(yes)
 
                     yes.Activated = function(sender, index)
+                        print(ESX.DumpTable(changestuff))
                         for k, v in pairs(changestuff) do
                             if v.name then
-                                print("ah")
+                                --("ah")
                                 TriggerServerEvent("ludaro_jobs:changename", v.job, v.name)
+                                Citizen.Wait(1000)
                             end
                             if v.label then
                                 TriggerServerEvent("ludaro_jobs:labelch", v.job, v.label)
+                                Citizen.Wait(1000)
                             end
                             if v.whitelist ~= nil then
                                 TriggerServerEvent("ludaro_jobs:setwhitelist", v.job, v.whitelist)
+                                Citizen.Wait(1000)
                             end
-
                             if v.bossmenu then
                                 menuclosed = true
                                 TriggerServerEvent("ludaro_jobs:setbossmenu", v.job, v.bossmenu)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markerred then
+                                TriggerServerEvent("ludaro_jobs:setmarkerred", v.job, v.markerred)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markerblue then
+                                TriggerServerEvent("ludaro_jobs:setmarkerblue", v.job, v.markerblue)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markergreen then
+                                TriggerServerEvent("ludaro_jobs:setmarkergreen", v.job, v.markergreen)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markeralpha then
+                                TriggerServerEvent("ludaro_jobs:setmarkeralpha", v.job, v.markeralpha)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markerid then
+                                TriggerServerEvent("ludaro_jobs:setmarkerid", v.job, v.markerid)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markerbobupanddown then
+                                TriggerServerEvent("ludaro_jobs:setmarkerbobupanddown", v.job, v.markerbobupanddown)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markerfacecamera then
+                                TriggerServerEvent("ludaro_jobs:setmarkerfacecamera", v.job, v.markerfacecamera)
+                                Citizen.Wait(1000)
+                            end
+                            if v.scalex then
+                                --("what")
+                                TriggerServerEvent("ludaro_jobs:setmarkerscalex", v.job, v.scalex)
+                                Citizen.Wait(1000)
+                            end
+                            if v.scaley then
+                                TriggerServerEvent("ludaro_jobs:setmarkerscaley", v.job, v.scaley)
+                                Citizen.Wait(1000)
+                            end
+                            if v.scalez then
+                                TriggerServerEvent("ludaro_jobs:setmarkerscalez", v.job, v.scalez)
+                                Citizen.Wait(1000)
+                            end
+                            if v.xoffset then
+                                TriggerServerEvent("ludaro_jobs:setmarkerxoffset", v.job, v.xoffset)
+                                Citizen.Wait(1000)
+                            end
+                            if v.yoffset then
+                                TriggerServerEvent("ludaro_jobs:setmarkeryoffset", v.job, v.yoffset)
+                                Citizen.Wait(1000)
+                            end
+                            if v.zoffset then
+                                TriggerServerEvent("ludaro_jobs:setmarkerzoffset", v.job, v.zoffset)
+                                Citizen.Wait(1000)
+                            end
+                            if v.markerenabled then
+                                TriggerServerEvent("ludaro_jobs:setmarkerenabled", v.job, v.markerenabled)
+                                Citizen.Wait(1000)
+                            end
+                            if v.xoffsetnpc then
+                                TriggerServerEvent("ludaro_jobs:setxoffsetnpc", v.job, v.xoffsetnpc)
+                                Citizen.Wait(1000)
+                            end
+                            if v.yoffsetnpc then
+                                TriggerServerEvent("ludaro_jobs:setyoffsetnpc", v.job, v.yoffsetnpc)
+                                Citizen.Wait(1000)
+                            end
+                            if v.zoffsetnpc then
+                                TriggerServerEvent("ludaro_jobs:setzoffsetnpc", v.job, v.zoffsetnpc)
+                                Citizen.Wait(1000)
+                            end
+                            print(v.npcmodel)
+                            if v.npcmodel then
+                                TriggerServerEvent("ludaro_jobs:setnpcmodel", v.job, v.npcmodel)
+                                Citizen.Wait(1000)
+                            end
+                            if v.npcheading then
+                                TriggerServerEvent("ludaro_jobs:setnpcheading", v.job, v.npcheading)
+                                Citizen.Wait(1000)
+                            end
+                            if v.npcenabled then
+                                TriggerServerEvent("ludaro_jobs:setnpcenabled", v.job, v.npcenabled)
+                                Citizen.Wait(1000)
                             end
                         end
                         _menuPool:CloseAllMenus()
@@ -443,7 +787,7 @@ if Config.Menu == "NativeUI" then
             end
 
             mainmenu:Visible(true)
-            lib.hideTextUI()
+            -- lib.hideTextUI()
 
             addjob = _menuPool:AddSubMenu(mainmenu, locale("addjob"), "")
             addjob.Item:RightLabel(">")
@@ -501,7 +845,7 @@ if Config.Menu == "NativeUI" then
                 TriggerServerEvent("ludaro_jobs:createjob", newname, newlabel, gradess)
                 --    Config.Notify(locale("success"))
                 if newsocietymoney then
-                    TriggerServerEvent("ludaro_jobs:setSocietyAccount", v.name or newname, newsocietymoney)
+                    TriggerServerEvent("ludaro_jobs:setsocietyaccount", v.name or newname, newsocietymoney)
                 end
                 _menuPool:CloseAllMenus()
                 openadminmenu()

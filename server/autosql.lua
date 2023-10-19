@@ -6,4 +6,3 @@ if Config.AutoSQL then
     end)
 end
 
-print("what")

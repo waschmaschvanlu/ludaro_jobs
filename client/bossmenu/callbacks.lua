@@ -1,3 +1,3 @@
-function getAllJobInfo()
-    return lib.callback.await('ludaro_jobs:getAllJobInfo', false)
+function getalljobinfo()
+    return lib.callback.await('ludaro_jobs:getalljobinfo', false)
 end

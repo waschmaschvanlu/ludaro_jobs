@@ -4,9 +4,9 @@ AddEventHandler('ludaro_jobs:Notify', function(txt)
 end)
 
 if Config.Menu == "NativeUI" then
-    RegisterNetEvent('ludaro_jobs:openInteractions')
-    AddEventHandler('ludaro_jobs:openInteractions', function(job)
-        openInteractions(job)
+    RegisterNetEvent('ludaro_jobs:openinteractions')
+    AddEventHandler('ludaro_jobs:openinteractions', function(job)
+        openinteractions(job)
     end)
     AddEventHandler('esx:onPlayerDeath', function(data)
         _menuPool:CloseAllMenus()

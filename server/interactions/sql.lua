@@ -1,18 +1,20 @@
 
 
 function getinteractions(name)
-    local row = MySQL.single.await('SELECT * FROM jobs WHERE `name` = ? LIMIT 1', { name })
-    if row then
-        return row.interactions or 0
-    else
+    local row = MySQL.single.await('SELECT interactions FROM jobs WHERE `name` = ? LIMIT 1', { name })
+    print(row == "[]")
+    if row == "[]" then
         return false
+    else
+        return row
     end
 end
 
 function addinteractions(name, value)
     interactions = getinteractions(name)
-    if tonumber(interactions) ~= 0 or interactions == false or interactions == true then
-        local decodedInteractions = json.decode(interactions)
+    print(interactions)
+    if tonumber(interactions) ~= 0 or interactions == false or interactions == true or #interactions ~= 0 then
+        local decodedInteractions = {} or json.decode(interactions)
         if not table.contains(decodedInteractions, value) then
             table.insert(decodedInteractions, value)
         end
@@ -20,6 +22,9 @@ function addinteractions(name, value)
     else
         interactions = json.encode({ value })
     end
+    print(" did it")
+    print(ESX.DumpTable(interactions))
+    print(name)
     MySQL.Async.execute('UPDATE jobs SET interactions = ? WHERE name = ?', { interactions, name })
 end
 
