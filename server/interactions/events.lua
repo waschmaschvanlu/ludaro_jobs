@@ -1,14 +1,14 @@
 RegisterNetEvent('ludaro_jobs:interactionserror')
 AddEventHandler('ludaro_jobs:interactionserror', function()
-debug2("error while starting event!", 1)
-Config.Notify("error while using Interaction! Contact Admin Please!")
+    consoleLog("error while starting event!", 1)
+    Config.Notify("error while using Interaction! Contact Admin Please!")
 end)
 
 
 
 RegisterNetEvent('ludaro_jobs:addinteraction')
 AddEventHandler('ludaro_jobs:addinteraction', function(job_name, interaction_name)
-    debug2("adding interaction", 2)
+    consoleLog("adding interaction", 2)
     addinteractions(job_name, nametolabel(interaction_name), source)
 end)
 
@@ -16,7 +16,7 @@ end)
 
 RegisterNetEvent('ludaro_jobs:removeinteraction')
 AddEventHandler('ludaro_jobs:removeinteraction', function(job_name, interaction_name)
-    debug2("remove interaction", 2)
+    consoleLog("remove interaction", 2)
     removeinteractions(job_name, nametolabel(interaction_name))
 end)
 

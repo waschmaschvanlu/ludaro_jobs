@@ -24,7 +24,7 @@ if Config.Menu == "NativeUI" then
     deletedjobs = {}
     function openadminmenu()
         menuclosed = false
-        jobs = getjobs()
+        jobs = cb_getJobs()
         number = 1
         if not _menuPool:IsAnyMenuOpen() then
             mainmenu = NativeUI.CreateMenu(locale("adminmenu"), "")
@@ -40,7 +40,7 @@ if Config.Menu == "NativeUI" then
 
 
                 if lib.table.contains(deletedjobs, v.name) then
-                    debug2("job is deleted " .. v.name)
+                    consoleLog("job is deleted " .. v.name)
                 else
                     jobsmenu = _menuPool:AddSubMenu(mainmenu, v.label, v.name)
                     _menuPool:RefreshIndex()
@@ -217,7 +217,7 @@ if Config.Menu == "NativeUI" then
                                 skin_male = {},
                                 skin_female = {}
                             }
-                            debug2(ESX.DumpTable(newGradeTable))
+                            consoleLog(ESX.DumpTable(newGradeTable))
                             TriggerServerEvent("ludaro_jobs:addgrade", v.name, newGradeTable)
                             _menuPool:CloseAllMenus()
                             openadminmenu()
@@ -244,7 +244,7 @@ if Config.Menu == "NativeUI" then
                             local foundMatch = false
                             for z, u in pairs(interactionss) do
                                 ----(getinteractionname(u), inter.name)
-                                if getinteractionname(u) == inter.name then
+                                if getInteractionName(u) == inter.name then
                                     foundMatch = true
                                     break
                                 end
@@ -644,15 +644,15 @@ if Config.Menu == "NativeUI" then
 
 
 
-                    deletejob = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("deletejob"), "")
+                    jobmenu_deleteJob = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("deletejob"), "")
                     if middleitem then
-                        deletejob.Item._Text.Padding = { X = 180 }
+                        jobmenu_deleteJob.Item._Text.Padding = { X = 180 }
                     end
 
-                    deletejob.Item:RightLabel(">")
+                    jobmenu_deleteJob.Item:RightLabel(">")
 
                     yes = NativeUI.CreateItem(locale("yes"), "")
-                    deletejob.SubMenu:AddItem(yes)
+                    jobmenu_deleteJob.SubMenu:AddItem(yes)
 
                     yes.Activated = function(sender, index)
                         TriggerServerEvent("ludaro_jobs:deletejob", v.name)
@@ -825,12 +825,12 @@ if Config.Menu == "NativeUI" then
             _menuPool:ControlDisablingEnabled(false)
 
             grades.Item:RightLabel(">")
-            addgrade = NativeUI.CreateItem(locale("addgrade"), "")
+            jobmenu_addGrade = NativeUI.CreateItem(locale("addgrade"), "")
 
 
 
 
-            grades.SubMenu:AddItem(addgrade)
+            grades.SubMenu:AddItem(jobmenu_addGrade)
             confirm = _menuPool:AddSubMenu(addjob.SubMenu, locale("confirm"), "")
             confirm.Item:RightLabel(">")
 
@@ -855,7 +855,7 @@ if Config.Menu == "NativeUI" then
             end
         end
         gradess = {}
-        addgrade.Activated = function(sender, index)
+        jobmenu_addGrade.Activated = function(sender, index)
             -- create a grade
             newgrade = KeyboardInput(locale("insertname"), "", 30)
             newgradelabel = KeyboardInput(locale("insertlabel"), "", 30)

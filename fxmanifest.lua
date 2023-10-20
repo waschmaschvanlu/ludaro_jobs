@@ -43,6 +43,7 @@ client_scripts {
     'NativeUILua/UIProgressBar/items/UIProgressBarItem.lua',
     "NativeUILua/NativeUI.lua",
     "client/debug.lua",
+    "client/framework/*.lua",
     "client/*.lua",
     "client/society/*.lua",
     "client/jobmenu/*.lua",

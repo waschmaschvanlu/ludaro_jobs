@@ -8,13 +8,13 @@ if (GetResourceState("es_extended") == "started") then
 end
 
 
-function getgroup()
+function cb_getGroup()
     group = lib.callback.await('ludaro_jobs:getGroup', false) or "user"
     return group
 end
 
-function isadmin()
-    return lib.table.contains(Config.AdminGroups, getgroup())
+function cb_isAdmin()
+    return lib.table.contains(Config.AdminGroups, cb_getGroup())
 end
 
 function locale(msg)

@@ -1,31 +1,31 @@
-function doesjobexist(job)
+function cb_doesJobExist(job)
     return lib.callback.await('ludaro_jobs:doesjobexist', false, job)
 end
 
-function getjobname(id)
+function cb_getJobName(id)
     return lib.callback.await('ludaro_jobs:getjobname', false, id)
 end
 
-function getjoblabel(id)
+function cb_getJobLabel(id)
     return lib.callback.await('ludaro_jobs:getjoblabel', false, id)
 end
 
-function getgradename(id)
+function cb_getGradeName(id)
     return lib.callback.await('ludaro_jobs:getgradename', false, id)
 end
 
-function getgradename(id)
+function cb_getGradeLabel(id)
     return lib.callback.await('ludaro_jobs:getgradelabel', false, id)
 end
 
-function getgrade(id)
+function cb_getGrade(id)
     return lib.callback.await('ludaro_jobs:getgrade', false, id)
 end
 
-function getjobs()
+function cb_getJobs()
     return lib.callback.await('ludaro_jobs:getjobs', false)
 end
 
-function getjobinfo(job)
+function sql_getJobInfo(job)
     return lib.callback.await('ludaro_jobs:getjobinfo', false, job)
 end

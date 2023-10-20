@@ -1,5 +1,5 @@
 if Config.Marker then
-    jobs = getalljobinfo()
+    jobs = sql_getAllJobInfo()
     for k, v in pairs(jobs) do
         v.ludaro_jobs_info = json.decode(v.ludaro_jobs_info)
         v.ludaro_jobs_info = v.ludaro_jobs_info or {}

@@ -1,4 +1,4 @@
-function debug2(msg, level)
+function consoleLog(msg, level)
     level = level or 1
     if Config.Debug >= level then
         local lineInfo = debug.getinfo(2, "Sl") or ""

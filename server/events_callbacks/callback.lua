@@ -1,26 +1,25 @@
-
--- FRAMEWORK 
+-- FRAMEWORK
 lib.callback.register('ludaro_jobs:getGroup', function(source)
-    return getgroup(source)
+    return cb_getGroup(source)
 end)
 -- FRAMEWORK END
 
 -- ADDONACCOUNT DATA
 lib.callback.register('ludaro_jobs:getsocietyaccount', function(source, name)
-    return getsocietyaccount(name)
+    return cb_getSocietyAccount(name)
 end)
 
 lib.callback.register('ludaro_jobs:setsocietyaccount', function(source, name, howmuch)
-    return setsocietyaccount(name, howmuch)
+    return cb_setSocietyAccount(name, howmuch)
 end)
 
 lib.callback.register('ludaro_jobs:addtosocietyaccount', function(source, name, howmuch)
-    return addtosocietyaccount(name, howmuch)
+    return cb_AddSocietyAccount(name, howmuch)
 end)
 
 
 lib.callback.register('ludaro_jobs:takefromsocietyaccount', function(source, name, howmuch)
-    return takefromsocietyaccount(name, howmuch)
+    return cb_takeFromSocietyAccount(name, howmuch)
 end)
 -- ADDON ACCOUNT DATA END
 
@@ -44,15 +43,15 @@ lib.callback.register('ludaro_jobs:getgradename', function(source, id)
 end)
 
 lib.callback.register('ludaro_jobs:getjobname', function(source, id)
-    return getjob(source or id)
+    return sql_getJob(source or id)
 end)
 
 lib.callback.register('ludaro_jobs:getjobs', function(source, id)
-    jobs = getjobs()
-    for k,v in pairs(jobs) do
-        v.whitelist = false or getwhitelist(v.name)
-        v.society = false or getsocietyaccount(v.name)
-        v.jobinfo =  getjobinfo(v.label)
+    jobs = cb_getJobs()
+    for k, v in pairs(jobs) do
+        v.whitelist = false or sql_getWhitelist(v.name)
+        v.society = false or cb_getSocietyAccount(v.name)
+        v.jobinfo = sql_getJobInfo(v.label)
         --(v.jobinfo)
     end
 
@@ -66,15 +65,14 @@ lib.callback.register('ludaro_jobs:getinteractions', function(source, job)
 end)
 
 lib.callback.register('ludaro_jobs:getwhitelist', function(source, job)
-    return getwhitelist(job)
+    return sql_getWhitelist(job)
 end)
 
 lib.callback.register('ludaro_jobs:getjobinfo', function(source, job, value)
-    return getjobinfo(job)
+    return sql_getJobInfo(job)
 end)
 
 
 lib.callback.register('ludaro_jobs:getalljobinfo', function(source, job, value)
- return getalljobinfo()
+    return sql_getAllJobInfo()
 end)
-
