@@ -27,7 +27,7 @@ if Config.Menu == "NativeUI" then
         jobs = cb_getJobs()
         number = 1
         if not _menuPool:IsAnyMenuOpen() then
-            mainmenu = NativeUI.CreateMenu(locale("adminmenu"), "")
+            mainmenu = NativeUI.CreateMenu(framework_locale("adminmenu"), "")
             _menuPool:Add(mainmenu)
             _menuPool:RefreshIndex()
             _menuPool:MouseControlsEnabled(false)
@@ -48,7 +48,7 @@ if Config.Menu == "NativeUI" then
                     _menuPool:MouseEdgeEnabled(false)
                     _menuPool:ControlDisablingEnabled(false)
                     jobsmenu.Item:RightLabel(">")
-                    local name = NativeUI.CreateItem(locale("name"), "")
+                    local name = NativeUI.CreateItem(framework_locale("name"), "")
                     jobsmenu.SubMenu:AddItem(name)
                     name:RightLabel(v.name)
 
@@ -57,8 +57,8 @@ if Config.Menu == "NativeUI" then
                         if #changestuff > 0 then
                             -- do something
                             local alert = lib.alertDialog({
-                                header = locale("unsaved"),
-                                content = locale("you have unsaved content"),
+                                header = framework_locale("unsaved"),
+                                content = framework_locale("you have unsaved content"),
                                 centered = true,
                                 cancel = true
                             })
@@ -88,23 +88,23 @@ if Config.Menu == "NativeUI" then
                         end
                     end
                     name.Activated = function(sender, index)
-                        newname = KeyboardInput(locale("insertname"), "", 30)
+                        newname = KeyboardInput(framework_locale("insertname"), "", 30)
                         if newname then
                             name:RightLabel(newname)
                             table.insert(changestuff, { job = v.name, name = newname })
                         end
                     end
-                    local label = NativeUI.CreateItem(locale("label"), "")
+                    local label = NativeUI.CreateItem(framework_locale("label"), "")
                     jobsmenu.SubMenu:AddItem(label)
                     label:RightLabel(v.label)
                     label.Activated = function(sender, index)
-                        newlabel = KeyboardInput(locale("insertlabel"), "", 30)
+                        newlabel = KeyboardInput(framework_locale("insertlabel"), "", 30)
                         if newlabel then
                             label:RightLabel(newlabel)
                             table.insert(changestuff, { job = v.label, label = newlabel })
                         end
                     end
-                    isWhitelistedadd = NativeUI.CreateCheckboxItem(locale("whitelisted"), false, "")
+                    isWhitelistedadd = NativeUI.CreateCheckboxItem(framework_locale("whitelisted"), false, "")
                     jobsmenu.SubMenu:AddItem(isWhitelistedadd)
                     isWhitelistedadd.Checked = v.whitelisted or false
 
@@ -112,7 +112,7 @@ if Config.Menu == "NativeUI" then
                         table.insert(changestuff, { job = v.label, whitelist = checked })
                     end
 
-                    grade = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("grade"), "")
+                    grade = _menuPool:AddSubMenu(jobsmenu.SubMenu, framework_locale("grade"), "")
                     _menuPool:RefreshIndex()
                     _menuPool:MouseControlsEnabled(false)
                     _menuPool:MouseEdgeEnabled(false)
@@ -129,11 +129,11 @@ if Config.Menu == "NativeUI" then
                     table.sort(sortedGrades, function(a, b) return a.grade < b.grade end)
                     for _, grad in ipairs(sortedGrades) do
                         gradeitem = _menuPool:AddSubMenu(grade.SubMenu, grad.name .. "(" .. grad.label .. ")", "")
-                        gradeitem.Item:RightLabel(grad.grade .. " || " .. grad.salary .. locale("$"))
-                        local salary = NativeUI.CreateItem(locale("salary"), "")
-                        local name = NativeUI.CreateItem(locale("name"), "")
-                        local label = NativeUI.CreateItem(locale("label"), "")
-                        salary:RightLabel(grad.salary .. locale("$"))
+                        gradeitem.Item:RightLabel(grad.grade .. " || " .. grad.salary .. framework_locale("$"))
+                        local salary = NativeUI.CreateItem(framework_locale("salary"), "")
+                        local name = NativeUI.CreateItem(framework_locale("name"), "")
+                        local label = NativeUI.CreateItem(framework_locale("label"), "")
+                        salary:RightLabel(grad.salary .. framework_locale("$"))
                         name:RightLabel(grad.name)
                         label:RightLabel(grad.label)
                         gradeitem.SubMenu:AddItem(salary)
@@ -143,23 +143,23 @@ if Config.Menu == "NativeUI" then
 
 
                         name.Activated = function(sender, index)
-                            newgradename = KeyboardInput(locale("insertname"), "", 30)
+                            newgradename = KeyboardInput(framework_locale("insertname"), "", 30)
                             if newgradename then
                                 name:RightLabel(newgradename)
                             end
                         end
                         label.Activated = function(sender, index)
-                            newgradelabel = KeyboardInput(locale("insertlabel"), "", 30)
+                            newgradelabel = KeyboardInput(framework_locale("insertlabel"), "", 30)
                             if newgradelabel then
                                 label:RightLabel(newgradelabel)
                             end
                         end
-                        local deletegrade = _menuPool:AddSubMenu(gradeitem.SubMenu, locale("deletegrade"), "")
+                        local deletegrade = _menuPool:AddSubMenu(gradeitem.SubMenu, framework_locale("deletegrade"), "")
                         deletegrade.Item:RightLabel(">")
                         if middleitem then
                             deletegrade.Item._Text.Padding = { X = 180 }
                         end
-                        local yes = NativeUI.CreateItem(locale("yes"), "")
+                        local yes = NativeUI.CreateItem(framework_locale("yes"), "")
                         deletegrade.SubMenu:AddItem(yes)
                         yes.Activated = function(sender, index)
                             TriggerServerEvent("ludaro_jobs:deletegrade", v.name, grad.name)
@@ -167,12 +167,12 @@ if Config.Menu == "NativeUI" then
                             openadminmenu()
                         end
 
-                        local confirm = _menuPool:AddSubMenu(gradeitem.SubMenu, locale("confirm"), "")
+                        local confirm = _menuPool:AddSubMenu(gradeitem.SubMenu, framework_locale("confirm"), "")
                         confirm.Item:RightLabel(">")
                         if middleitem then
                             confirm.Item._Text.Padding = { X = 180 }
                         end
-                        local yes = NativeUI.CreateItem(locale("yes"), "")
+                        local yes = NativeUI.CreateItem(framework_locale("yes"), "")
                         confirm.SubMenu:AddItem(yes)
                         yes.Activated = function(sender, index)
                             if newgradename then
@@ -186,26 +186,26 @@ if Config.Menu == "NativeUI" then
                         end
                     end
 
-                    creategrade = NativeUI.CreateItem(locale("creategrade"), "")
+                    creategrade = NativeUI.CreateItem(framework_locale("creategrade"), "")
 
                     creategrade.Activated = function(sender, index)
                         -- create a grade
-                        newgrade = KeyboardInput(locale("insertname"), "", 30)
-                        newgradelabel = KeyboardInput(locale("insertlabel"), "", 30)
+                        newgrade = KeyboardInput(framework_locale("insertname"), "", 30)
+                        newgradelabel = KeyboardInput(framework_locale("insertlabel"), "", 30)
                         if newgrade ~= "" and newgradelabel ~= "" then
-                            newgradesalary = KeyboardInput(locale("insertsalary"), "", 30)
+                            newgradesalary = KeyboardInput(framework_locale("insertsalary"), "", 30)
                             if tonumber(newgradesalary) ~= nil then
                             else
                                 -- Code to execute if newgradesalary is not a number
-                                Config.Notify(locale("nonumber"))
-                                newgradesalary = KeyboardInput(locale("insertsalary"), "", 30)
+                                Config.Notify(framework_locale("nonumber"))
+                                newgradesalary = KeyboardInput(framework_locale("insertsalary"), "", 30)
                             end
 
                             if tonumber(newgradesalary) ~= nil then
                                 salary = 0
                             end
 
-                            newid = KeyboardInput(locale("insertid"), "", 30)
+                            newid = KeyboardInput(framework_locale("insertid"), "", 30)
 
 
                             newGradeTable = {
@@ -225,7 +225,7 @@ if Config.Menu == "NativeUI" then
                     end
                     grade.SubMenu:AddItem(creategrade)
 
-                    interactions = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("interactions"), "")
+                    interactions = _menuPool:AddSubMenu(jobsmenu.SubMenu, framework_locale("interactions"), "")
                     interactions.Item:RightLabel(">")
 
                     local sortedInteractions = {}
@@ -257,9 +257,9 @@ if Config.Menu == "NativeUI" then
                         end
 
                         interactionitem.Item:RightLabel(isiconinjob or "|" .. inter.prio .. " | " .. isiconinjob)
-                        local prio = NativeUI.CreateItem(locale("prio"), "")
-                        local name = NativeUI.CreateItem(locale("name"), "")
-                        local icon = NativeUI.CreateItem(locale("icon"), "")
+                        local prio = NativeUI.CreateItem(framework_locale("prio"), "")
+                        local name = NativeUI.CreateItem(framework_locale("name"), "")
+                        local icon = NativeUI.CreateItem(framework_locale("icon"), "")
                         prio:RightLabel(inter.prio)
                         name:RightLabel(inter.name)
                         icon:RightLabel(inter.icon)
@@ -267,13 +267,14 @@ if Config.Menu == "NativeUI" then
                         interactionitem.SubMenu:AddItem(name)
                         interactionitem.SubMenu:AddItem(icon)
                         if isiconinjob == "❌" then
-                            local deleteinter = _menuPool:AddSubMenu(interactionitem.SubMenu, locale("addinteraction"),
+                            local deleteinter = _menuPool:AddSubMenu(interactionitem.SubMenu,
+                                framework_locale("addinteraction"),
                                 "")
                             deleteinter.Item:RightLabel(">")
                             if middleitem then
                                 deleteinter.Item._Text.Padding = { X = 180 }
                             end
-                            local yes = NativeUI.CreateItem(locale("yes"), "")
+                            local yes = NativeUI.CreateItem(framework_locale("yes"), "")
                             deleteinter.SubMenu:AddItem(yes)
                             yes.Activated = function(sender, index)
                                 TriggerServerEvent("ludaro_jobs:addinteraction", v.name, inter.name)
@@ -281,13 +282,14 @@ if Config.Menu == "NativeUI" then
                                 openadminmenu()
                             end
                         else
-                            local deleteinter = _menuPool:AddSubMenu(interactionitem.SubMenu, locale("removeinteraction"),
+                            local deleteinter = _menuPool:AddSubMenu(interactionitem.SubMenu,
+                                framework_locale("removeinteraction"),
                                 "")
                             deleteinter.Item:RightLabel(">")
                             if middleitem then
                                 deleteinter.Item._Text.Padding = { X = 180 }
                             end
-                            local yes = NativeUI.CreateItem(locale("yes"), "")
+                            local yes = NativeUI.CreateItem(framework_locale("yes"), "")
                             deleteinter.SubMenu:AddItem(yes)
                             yes.Activated = function(sender, index)
                                 TriggerServerEvent("ludaro_jobs:removeinteraction", v.name, inter.name)
@@ -300,7 +302,7 @@ if Config.Menu == "NativeUI" then
                     society = v.society
 
                     if society == false then
-                        local createsociety = NativeUI.CreateItem(locale("createsociety"), "")
+                        local createsociety = NativeUI.CreateItem(framework_locale("createsociety"), "")
                         jobsmenu.SubMenu:AddItem(createsociety)
                         createsociety.Activated = function(sender, index)
                             TriggerServerEvent("ludaro_jobs:createsociety", v.name)
@@ -308,15 +310,15 @@ if Config.Menu == "NativeUI" then
                             openadminmenu()
                         end
                     else
-                        local societymoney = NativeUI.CreateItem(locale("society-money"), "")
-                        societymoney:RightLabel(society or 0 .. locale("$"))
+                        local societymoney = NativeUI.CreateItem(framework_locale("society-money"), "")
+                        societymoney:RightLabel(society or 0 .. framework_locale("$"))
 
                         societymoney.Activated = function(sender, index)
-                            newsocietymoney = KeyboardInput(locale("insertmoney"), "", 30)
+                            newsocietymoney = KeyboardInput(framework_locale("insertmoney"), "", 30)
                             if newsocietymoney == nil then
                                 newsocietymoney = society
                             end
-                            societymoney:RightLabel(newsocietymoney .. locale("$"))
+                            societymoney:RightLabel(newsocietymoney .. framework_locale("$"))
                         end
                         jobsmenu.SubMenu:AddItem(societymoney)
                     end
@@ -330,15 +332,15 @@ if Config.Menu == "NativeUI" then
                     --     end
                     --     jobsmenu.SubMenu:AddItem(coords2)
 
-                    bossmenumenu = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("bossmenu"), "")
+                    bossmenumenu = _menuPool:AddSubMenu(jobsmenu.SubMenu, framework_locale("bossmenu"), "")
                     bossmenumenu.Item:RightLabel(">")
-                    bossmenu = NativeUI.CreateItem(locale("bossmenucoords"), "")
+                    bossmenu = NativeUI.CreateItem(framework_locale("bossmenucoords"), "")
                     bossmenumenu.SubMenu:AddItem(bossmenu)
 
                     jobinfoo = json.decode(v.jobinfo)
 
                     if Config.Marker then
-                        marker = _menuPool:AddSubMenu(bossmenumenu.SubMenu, locale("marker"), "")
+                        marker = _menuPool:AddSubMenu(bossmenumenu.SubMenu, framework_locale("marker"), "")
                         marker.Item:RightLabel(">")
 
                         markertypes = {}
@@ -351,47 +353,49 @@ if Config.Menu == "NativeUI" then
                             table.insert(colors, i)
                         end
 
-                        markertype = NativeUI.CreateListItem(locale("markerid"), markertypes, 1, "")
+                        markertype = NativeUI.CreateListItem(framework_locale("markerid"), markertypes, 1, "")
                         marker.SubMenu:AddItem(markertype)
 
-                        scale = _menuPool:AddSubMenu(marker.SubMenu, locale("scale"), "")
+                        scale = _menuPool:AddSubMenu(marker.SubMenu, framework_locale("scale"), "")
                         scale.Item:RightLabel(">")
 
-                        scalex = NativeUI.CreateItem(locale("scalex"), "")
+                        scalex = NativeUI.CreateItem(framework_locale("scalex"), "")
                         scale.SubMenu:AddItem(scalex)
-                        scaley = NativeUI.CreateItem(locale("scaley"), "")
+                        scaley = NativeUI.CreateItem(framework_locale("scaley"), "")
                         scale.SubMenu:AddItem(scaley)
-                        scalez = NativeUI.CreateItem(locale("scalez"), "")
+                        scalez = NativeUI.CreateItem(framework_locale("scalez"), "")
                         scale.SubMenu:AddItem(scalez)
 
 
-                        offset = _menuPool:AddSubMenu(marker.SubMenu, locale("offset"), "")
+                        offset = _menuPool:AddSubMenu(marker.SubMenu, framework_locale("offset"), "")
                         offset.Item:RightLabel(">")
 
-                        xoffset = NativeUI.CreateItem(locale("xoffset"), "")
+                        xoffset = NativeUI.CreateItem(framework_locale("xoffset"), "")
                         offset.SubMenu:AddItem(xoffset)
-                        yoffset = NativeUI.CreateItem(locale("yoffset"), "")
+                        yoffset = NativeUI.CreateItem(framework_locale("yoffset"), "")
                         offset.SubMenu:AddItem(yoffset)
-                        zoffset = NativeUI.CreateItem(locale("zoffset"), "")
+                        zoffset = NativeUI.CreateItem(framework_locale("zoffset"), "")
                         offset.SubMenu:AddItem(zoffset)
 
 
-                        color = _menuPool:AddSubMenu(marker.SubMenu, locale("color"), "")
+                        color = _menuPool:AddSubMenu(marker.SubMenu, framework_locale("color"), "")
                         color.Item:RightLabel(">")
 
-                        red = NativeUI.CreateListItem(locale("red"), colors, jobinfoo.markerred or 255, "")
+                        red = NativeUI.CreateListItem(framework_locale("red"), colors, jobinfoo.markerred or 255, "")
                         color.SubMenu:AddItem(red)
-                        green = NativeUI.CreateListItem(locale("green"), colors, jobinfoo.markergreen or 255, "")
+                        green = NativeUI.CreateListItem(framework_locale("green"), colors, jobinfoo.markergreen or 255,
+                            "")
                         color.SubMenu:AddItem(green)
-                        blue = NativeUI.CreateListItem(locale("blue"), colors, jobinfoo.markerblue or 255, "")
+                        blue = NativeUI.CreateListItem(framework_locale("blue"), colors, jobinfoo.markerblue or 255, "")
                         color.SubMenu:AddItem(blue)
-                        alpha = NativeUI.CreateListItem(locale("alpha"), colors, jobinfoo.markeralpha or 255, "")
+                        alpha = NativeUI.CreateListItem(framework_locale("alpha"), colors, jobinfoo.markeralpha or 255,
+                            "")
                         color.SubMenu:AddItem(alpha)
-                        coloritem = NativeUI.CreateItem(locale("color"), "")
+                        coloritem = NativeUI.CreateItem(framework_locale("color"), "")
 
                         -- here
                         color.SubMenu.OnListChange = function(sender, index, number)
-                            if index.Base.Text._Text == locale("red") then
+                            if index.Base.Text._Text == framework_locale("red") then
                                 local found = false
                                 for i, y in ipairs(changestuff) do
                                     --(y.job, v.label, y.markerred)
@@ -404,7 +408,7 @@ if Config.Menu == "NativeUI" then
                                 if not found then
                                     table.insert(changestuff, { job = v.label, markerred = number })
                                 end
-                            elseif index.Base.Text._Text == locale("green") then
+                            elseif index.Base.Text._Text == framework_locale("green") then
                                 local found = false
                                 for i, y in ipairs(changestuff) do
                                     --   --(y.job == v.label and y.markergreen ~= nil)
@@ -418,7 +422,7 @@ if Config.Menu == "NativeUI" then
                                 if not found then
                                     table.insert(changestuff, { job = v.label, markergreen = number })
                                 end
-                            elseif index.Base.Text._Text == locale("blue") then
+                            elseif index.Base.Text._Text == framework_locale("blue") then
                                 local found = false
                                 for i, y in ipairs(changestuff) do
                                     if y.job == v.label and y.markerblue ~= nil then
@@ -429,7 +433,7 @@ if Config.Menu == "NativeUI" then
                                 if not found then
                                     table.insert(changestuff, { job = v.label, markerblue = number })
                                 end
-                            elseif index.Base.Text._Text == locale("alpha") then
+                            elseif index.Base.Text._Text == framework_locale("alpha") then
                                 local found = false
                                 for i, y in ipairs(changestuff) do
                                     if y.job == v.label and y.markeralpha ~= nil then
@@ -452,12 +456,12 @@ if Config.Menu == "NativeUI" then
                         -- marker.SubMenu:AddItem(green)
                         -- marker.SubMenu:AddItem(blue)
                         -- marker.SubMenu:AddItem(alpha)
-                        bobupanddown = NativeUI.CreateCheckboxItem(locale("bobupanddown"), false, "")
+                        bobupanddown = NativeUI.CreateCheckboxItem(framework_locale("bobupanddown"), false, "")
                         marker.SubMenu:AddItem(bobupanddown)
 
-                        facecamera = NativeUI.CreateCheckboxItem(locale("facecamera"), false, "")
+                        facecamera = NativeUI.CreateCheckboxItem(framework_locale("facecamera"), false, "")
                         marker.SubMenu:AddItem(facecamera)
-                        markerenabled = NativeUI.CreateCheckboxItem(locale("markerenabled"), false, "")
+                        markerenabled = NativeUI.CreateCheckboxItem(framework_locale("markerenabled"), false, "")
                         marker.SubMenu:AddItem(markerenabled)
                         bobupanddown.Checked = json.decode(v.jobinfo).markerbobupanddown or false
                         facecamera.Checked = json.decode(v.jobinfo).markerfacecamera or false
@@ -468,63 +472,63 @@ if Config.Menu == "NativeUI" then
                         end
 
                         scalex.Activated = function(sender, index)
-                            newscalex = KeyboardInput(locale("insertscale"), "", 30)
+                            newscalex = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newscalex) ~= nil then
                                 index.Label.Text._Text = newscalex
                                 table.insert(changestuff, { job = v.label, scalex = newscalex })
                                 --("what")
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         scaley.Activated = function(sender, index)
-                            newscaley = KeyboardInput(locale("insertscale"), "", 30)
+                            newscaley = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newscaley) ~= nil then
                                 index.Label.Text._Text = newscaley
                                 table.insert(changestuff, { job = v.label, scaley = newscaley })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         scalez.Activated = function(sender, index)
-                            newscalez = KeyboardInput(locale("insertscale"), "", 30)
+                            newscalez = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newscalez) ~= nil then
                                 index.Label.Text._Text = newscalez
                                 table.insert(changestuff, { job = v.label, scalez = newscalez })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         xoffset.Activated = function(sender, index)
-                            newxoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            newxoffset = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newxoffset) ~= nil then
                                 index.Label.Text._Text = newxoffset
                                 table.insert(changestuff, { job = v.label, xoffset = newxoffset })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         yoffset.Activated = function(sender, index)
-                            newyoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            newyoffset = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newyoffset) ~= nil then
                                 index.Label.Text._Text = newyoffset
                                 table.insert(changestuff, { job = v.label, yoffset = newyoffset })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         zoffset.Activated = function(sender, index)
-                            newzoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            newzoffset = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newzoffset) ~= nil then
                                 index.Label.Text._Text = newzoffset
                                 table.insert(changestuff, { job = v.label, zoffset = newzoffset })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
@@ -545,75 +549,75 @@ if Config.Menu == "NativeUI" then
                         end
                     end
                     if Config.NPC then
-                        npc = _menuPool:AddSubMenu(bossmenumenu.SubMenu, locale("NPC"), "")
+                        npc = _menuPool:AddSubMenu(bossmenumenu.SubMenu, framework_locale("NPC"), "")
                         npc.Item:RightLabel(">")
 
-                        offset = _menuPool:AddSubMenu(npc.SubMenu, locale("offset"), "")
+                        offset = _menuPool:AddSubMenu(npc.SubMenu, framework_locale("offset"), "")
                         offset.Item:RightLabel(">")
 
-                        xoffset = NativeUI.CreateItem(locale("xoffset"), "")
+                        xoffset = NativeUI.CreateItem(framework_locale("xoffset"), "")
                         offset.SubMenu:AddItem(xoffset)
-                        yoffset = NativeUI.CreateItem(locale("yoffset"), "")
+                        yoffset = NativeUI.CreateItem(framework_locale("yoffset"), "")
                         offset.SubMenu:AddItem(yoffset)
-                        zoffset = NativeUI.CreateItem(locale("zoffset"), "")
+                        zoffset = NativeUI.CreateItem(framework_locale("zoffset"), "")
                         offset.SubMenu:AddItem(zoffset)
 
                         xoffset.Activated = function(sender, index)
-                            newxoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            newxoffset = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newxoffset) ~= nil then
                                 index.Label.Text._Text = newxoffset
                                 table.insert(changestuff, { job = v.label, xoffsetnpc = newxoffset })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         yoffset.Activated = function(sender, index)
-                            newyoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            newyoffset = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newyoffset) ~= nil then
                                 index.Label.Text._Text = newyoffset
                                 table.insert(changestuff, { job = v.label, yoffsetnpc = newyoffset })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
                         zoffset.Activated = function(sender, index)
-                            newzoffset = KeyboardInput(locale("insertscale"), "", 30)
+                            newzoffset = KeyboardInput(framework_locale("insertscale"), "", 30)
                             if tonumber(newzoffset) ~= nil then
                                 index.Label.Text._Text = newzoffset
                                 table.insert(changestuff, { job = v.label, zoffsetnpc = newzoffset })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
-                        model = NativeUI.CreateItem(locale("model"), "")
+                        model = NativeUI.CreateItem(framework_locale("model"), "")
                         npc.SubMenu:AddItem(model)
                         model.Activated = function(sender, index)
-                            newmodel = KeyboardInput(locale("insertmodel"), "", 30)
+                            newmodel = KeyboardInput(framework_locale("insertmodel"), "", 30)
                             if tostring(newmodel) ~= nil then
                                 index.Label.Text._Text = newmodel
                                 table.insert(changestuff, { job = v.label, npcmodel = newmodel })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
 
-                        heading = NativeUI.CreateItem(locale("heading"), "")
+                        heading = NativeUI.CreateItem(framework_locale("heading"), "")
                         npc.SubMenu:AddItem(heading)
                         heading.Activated = function(sender, index)
-                            newheading = KeyboardInput(locale("insertheading"), "", 30)
+                            newheading = KeyboardInput(framework_locale("insertheading"), "", 30)
                             if tonumber(newheading) ~= nil then
                                 index.Label.Text._Text = newheading
                                 table.insert(changestuff, { job = v.label, npcheading = newheading })
                             else
-                                Config.Notify(locale("nonumber"))
+                                Config.Notify(framework_locale("nonumber"))
                             end
                         end
 
-                        npcenabled = NativeUI.CreateCheckboxItem(locale("npcenabled"), false, "")
+                        npcenabled = NativeUI.CreateCheckboxItem(framework_locale("npcenabled"), false, "")
                         npc.SubMenu:AddItem(npcenabled)
                         npcenabled.CheckboxEvent = function(menu, item, checked)
                             table.insert(changestuff, { job = v.label, npcenabled = checked })
@@ -644,14 +648,14 @@ if Config.Menu == "NativeUI" then
 
 
 
-                    jobmenu_deleteJob = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("deletejob"), "")
+                    jobmenu_deleteJob = _menuPool:AddSubMenu(jobsmenu.SubMenu, framework_locale("deletejob"), "")
                     if middleitem then
                         jobmenu_deleteJob.Item._Text.Padding = { X = 180 }
                     end
 
                     jobmenu_deleteJob.Item:RightLabel(">")
 
-                    yes = NativeUI.CreateItem(locale("yes"), "")
+                    yes = NativeUI.CreateItem(framework_locale("yes"), "")
                     jobmenu_deleteJob.SubMenu:AddItem(yes)
 
                     yes.Activated = function(sender, index)
@@ -663,7 +667,7 @@ if Config.Menu == "NativeUI" then
 
 
 
-                    confirm = _menuPool:AddSubMenu(jobsmenu.SubMenu, locale("confirm"), "")
+                    confirm = _menuPool:AddSubMenu(jobsmenu.SubMenu, framework_locale("confirm"), "")
                     confirm.Item:RightLabel(">")
                     if middleitem then
                         confirm.Item._Text.Padding = { X = 180 }
@@ -676,7 +680,7 @@ if Config.Menu == "NativeUI" then
 
 
 
-                    yes = NativeUI.CreateItem(locale("yes"), "")
+                    yes = NativeUI.CreateItem(framework_locale("yes"), "")
                     confirm.SubMenu:AddItem(yes)
 
                     yes.Activated = function(sender, index)
@@ -792,46 +796,46 @@ if Config.Menu == "NativeUI" then
             mainmenu:Visible(true)
             -- lib.hideTextUI()
 
-            addjob = _menuPool:AddSubMenu(mainmenu, locale("addjob"), "")
+            addjob = _menuPool:AddSubMenu(mainmenu, framework_locale("addjob"), "")
             addjob.Item:RightLabel(">")
             -- to add new job
             _menuPool:RefreshIndex()
             _menuPool:MouseControlsEnabled(false)
             _menuPool:MouseEdgeEnabled(false)
             _menuPool:ControlDisablingEnabled(false)
-            name = NativeUI.CreateItem(locale("name"), "")
+            name = NativeUI.CreateItem(framework_locale("name"), "")
             addjob.SubMenu:AddItem(name)
-            label = NativeUI.CreateItem(locale("label"), "")
+            label = NativeUI.CreateItem(framework_locale("label"), "")
             label.Activated = function(sender, index)
-                newlabel = KeyboardInput(locale("insertname"), "", 30)
+                newlabel = KeyboardInput(framework_locale("insertname"), "", 30)
                 if newlabel then
                     label:RightLabel(newlabel)
                 end
             end
             name.Activated = function(sender, index)
-                newname = KeyboardInput(locale("insertname"), "", 30)
+                newname = KeyboardInput(framework_locale("insertname"), "", 30)
                 if newname then
                     name:RightLabel(newname)
                 end
             end
             addjob.SubMenu:AddItem(label)
-            isWhitelistedadd = NativeUI.CreateCheckboxItem(locale("whitelisted"), false, "")
+            isWhitelistedadd = NativeUI.CreateCheckboxItem(framework_locale("whitelisted"), false, "")
             addjob.SubMenu:AddItem(isWhitelistedadd)
 
-            grades = _menuPool:AddSubMenu(addjob.SubMenu, locale("grades"), "")
+            grades = _menuPool:AddSubMenu(addjob.SubMenu, framework_locale("grades"), "")
             _menuPool:RefreshIndex()
             _menuPool:MouseControlsEnabled(false)
             _menuPool:MouseEdgeEnabled(false)
             _menuPool:ControlDisablingEnabled(false)
 
             grades.Item:RightLabel(">")
-            jobmenu_addGrade = NativeUI.CreateItem(locale("addgrade"), "")
+            jobmenu_addGrade = NativeUI.CreateItem(framework_locale("addgrade"), "")
 
 
 
 
             grades.SubMenu:AddItem(jobmenu_addGrade)
-            confirm = _menuPool:AddSubMenu(addjob.SubMenu, locale("confirm"), "")
+            confirm = _menuPool:AddSubMenu(addjob.SubMenu, framework_locale("confirm"), "")
             confirm.Item:RightLabel(">")
 
 
@@ -839,7 +843,7 @@ if Config.Menu == "NativeUI" then
             _menuPool:MouseControlsEnabled(false)
             _menuPool:MouseEdgeEnabled(false)
             _menuPool:ControlDisablingEnabled(false)
-            yes = NativeUI.CreateItem(locale("yes"), "")
+            yes = NativeUI.CreateItem(framework_locale("yes"), "")
             confirm.SubMenu:AddItem(yes)
 
 
@@ -857,16 +861,16 @@ if Config.Menu == "NativeUI" then
         gradess = {}
         jobmenu_addGrade.Activated = function(sender, index)
             -- create a grade
-            newgrade = KeyboardInput(locale("insertname"), "", 30)
-            newgradelabel = KeyboardInput(locale("insertlabel"), "", 30)
+            newgrade = KeyboardInput(framework_locale("insertname"), "", 30)
+            newgradelabel = KeyboardInput(framework_locale("insertlabel"), "", 30)
 
             if newgrade ~= "" and newgradelabel ~= "" then
-                newgradesalary = KeyboardInput(locale("insertsalary"), "", 30)
+                newgradesalary = KeyboardInput(framework_locale("insertsalary"), "", 30)
                 if tonumber(newgradesalary) ~= nil then
                 else
                     -- Code to execute if newgradesalary is not a number
-                    Config.Notify(locale("nonumber"))
-                    newgradesalary = KeyboardInput(locale("insertsalary"), "", 30)
+                    Config.Notify(framework_locale("nonumber"))
+                    newgradesalary = KeyboardInput(framework_locale("insertsalary"), "", 30)
                 end
 
                 if tonumber(newgradesalary) ~= nil then
@@ -891,7 +895,7 @@ if Config.Menu == "NativeUI" then
                         if not createdItems[v.name] then
                             gradecreated = NativeUI.CreateItem(v.name .. " (" .. v.label .. ")", "")
                             grades.SubMenu:AddItem(gradecreated)
-                            gradecreated:RightLabel(k - 1 .. " | " .. v.salary .. locale("$"))
+                            gradecreated:RightLabel(k - 1 .. " | " .. v.salary .. framework_locale("$"))
                             createdItems[v.name] = true
                         end
                     end

@@ -6,11 +6,11 @@ if (GetResourceState("es_extended") == "started") then
     end
 end
 
-function cb_getGroup(id)
+function framework_cb_getGroup(id)
     return ESX.GetPlayerFromId(id).getGroup() or "user"
 end
 
-function locale(msg)
+function framework_locale(msg)
     local translation = Config.Translation[Config.Locale][msg]
     if translation then
         return translation

@@ -3,10 +3,10 @@ if Config.Menu == "NativeUI" then
         interactions = lib.callback.await('ludaro_jobs:getinteractions', false, job)
         print(ESX.DumpTable(interactions))
         if tonumber(interactions) == 0 or interactions == false or interactions == true then
-            Config.Notify(locale("nointeractions"))
+            Config.Notify(framework_locale("nointeractions"))
         else
             interactions = interactions
-            mainmenu = NativeUI.CreateMenu(locale("interactions") .. " | " .. job, "")
+            mainmenu = NativeUI.CreateMenu(framework_locale("interactions") .. " | " .. job, "")
             _menuPool:Add(mainmenu)
             _menuPool:RefreshIndex()
             _menuPool:MouseControlsEnabled(false)

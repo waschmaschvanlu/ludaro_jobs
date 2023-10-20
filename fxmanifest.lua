@@ -63,7 +63,8 @@ server_script {
     "server/events_callbacks/*.lua",
     "server/jobmenu/*.lua",
     "server/interactions/*.lua",
-    "server/bossmenu/*.lua"
+    "server/bossmenu/*.lua",
+    "server/webhook/*.lua",
 }
 shared_scripts {
     '@ox_lib/init.lua',
@@ -71,7 +72,6 @@ shared_scripts {
     "shared/*.lua",
     "shared/interactions/*.lua",
     "shared/jobmenu/*.lua",
-    "shared/bossmenu/*.lua"
 }
 
 requires {

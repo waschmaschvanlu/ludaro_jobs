@@ -1,6 +1,6 @@
 function jobmenu_createJob(name, label, grades, id)
     if name == nil or label == nil then
-        Config.Notify(locale("errorjob"), id)
+        Config.Notify(framework_locale("errorjob"), id)
         return
     else
         if grades == nil or (type(grades) == 'table' and not next(grades)) then
@@ -32,9 +32,9 @@ function jobmenu_createJob(name, label, grades, id)
         end
         print(id, gradess)
         if idd or grades then
-            Config.Notify(locale("success"), id)
+            Config.Notify(framework_locale("success"), id)
         else
-            Config.Notify(locale("errorjob"), id)
+            Config.Notify(framework_locale("errorjob"), id)
         end
     end
 end
@@ -68,9 +68,9 @@ function jobmenu_addGrade(job_name, grades, id)
 
     if gradess then
         print(gradess)
-        Config.Notify(locale("success"), id)
+        Config.Notify(framework_locale("success"), id)
     else
-        Config.Notify(locale("errorjob"), id)
+        Config.Notify(framework_locale("errorjob"), id)
     end
 end
 
@@ -85,10 +85,10 @@ function jobmenu_deleteGrade(job_name, grade_name, id)
         if status then
             consoleLog("deletedjob with the name " .. job_name, 2)
             print(status)
-            Config.Notify(locale("success"), id)
+            Config.Notify(framework_locale("success"), id)
         else
             consoleLog('Transaction failed!')
-            Config.Notify(locale("errorjob"), id)
+            Config.Notify(framework_locale("errorjob"), id)
         end
     end)
 end
@@ -112,10 +112,10 @@ function jobmenu_deleteJob(name, id)
     MySQL.Async.transaction(queries, function(status)
         if status then
             consoleLog("deletedjob with the name" .. name, 2)
-            Config.Notify(locale("success"), id)
+            Config.Notify(framework_locale("success"), id)
         else
             consoleLog('Transaction failed!')
-            Config.Notify(locale("errorjob"), id)
+            Config.Notify(framework_locale("errorjob"), id)
         end
     end)
 end
@@ -129,10 +129,10 @@ function jobmenu_changeNameGrade(old_name, new_name, id)
     MySQL.Async.transaction(queries, function(status)
         if status then
             consoleLog("changed name from " .. old_name .. " to " .. new_name, 2)
-            Config.Notify(locale("success"), id)
+            Config.Notify(framework_locale("success"), id)
         else
             consoleLog('Transaction failed!')
-            Config.Notify(locale("errorjob"), id)
+            Config.Notify(framework_locale("errorjob"), id)
         end
     end)
 end
@@ -146,10 +146,10 @@ function jobmenu_changeLabelGrade(old_label, new_label, id)
     MySQL.Async.transaction(queries, function(status)
         if status then
             consoleLog("changed label from " .. old_label .. " to " .. new_label, 2)
-            Config.Notify(locale("success"), id)
+            Config.Notify(framework_locale("success"), id)
         else
             consoleLog('Transaction failed!')
-            Config.Notify(locale("errorjob"), id)
+            Config.Notify(framework_locale("errorjob"), id)
         end
     end)
 end

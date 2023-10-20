@@ -1,6 +1,6 @@
 -- FRAMEWORK
 lib.callback.register('ludaro_jobs:getGroup', function(source)
-    return cb_getGroup(source)
+    return framework_cb_getGroup(source)
 end)
 -- FRAMEWORK END
 

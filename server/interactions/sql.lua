@@ -1,5 +1,3 @@
-
-
 function getinteractions(name)
     local row = MySQL.single.await('SELECT interactions FROM jobs WHERE `name` = ? LIMIT 1', { name })
     print(row == "[]")
@@ -15,7 +13,7 @@ function addinteractions(name, value)
     print(interactions)
     if tonumber(interactions) ~= 0 or interactions == false or interactions == true or #interactions ~= 0 then
         local decodedInteractions = {} or json.decode(interactions)
-        if not table.contains(decodedInteractions, value) then
+        if not table.tableContains(decodedInteractions, value) then
             table.insert(decodedInteractions, value)
         end
         interactions = json.encode(decodedInteractions)
@@ -27,7 +25,6 @@ function addinteractions(name, value)
     print(name)
     MySQL.Async.execute('UPDATE jobs SET interactions = ? WHERE name = ?', { interactions, name })
 end
-
 
 function removeinteractions(name, value)
     interactions = getinteractions(name)
@@ -47,13 +44,11 @@ function removeinteractions(name, value)
         end
     end
     MySQL.Async.execute('UPDATE jobs SET interactions = ? WHERE name = ?', { interactions, name })
-    
 end
-
 
 function changelabel(old_label, new_label)
     MySQL.Async.execute('UPDATE jobs SET label = ? WHERE label = ?', { new_label, old_label })
-   
+
     ESX.RefreshJobs()
 end
 
@@ -61,17 +56,17 @@ function changename(old_name, new_name)
     MySQL.Async.execute('UPDATE jobs SET name = ? WHERE name = ?', { new_name, old_name })
     MySQL.Async.execute('UPDATE job_grades SET job_name = ? WHERE job_name = ?', { new_name, old_name })
     MySQL.Async.execute('UPDATE users SET job = ? WHERE job = ?', { new_name, old_name })
-    MySQL.Async.execute('UPDATE addon_account_data SET account_name = ? WHERE account_name = ?', { "society_"..new_name, "society_"..old_name })
+    MySQL.Async.execute('UPDATE addon_account_data SET account_name = ? WHERE account_name = ?',
+        { "society_" .. new_name, "society_" .. old_name })
     MySQL.Async.execute('UPDATE users SET job = ? WHERE job = ?', { new_name, old_name })
     MySQL.Async.execute('UPDATE ADDON_ACCOUNT SET NAME = ? WHERE NAME = ?', { SOCIETY_NEW_NAME, SOCIETY_OLD_NAME })
     MySQL.Async.execute('UPDATE JOB_GRADES SET JOB_NAME = ? WHERE JOB_NAME = ?', { NEW_NAME, OLD_NAME })
     MySQL.Async.execute('UPDATE datastore_data SET name = ? WHERE name = ?', { society_new_name, society_old_name })
 
-    
-Citizen.Wait(2000)
+
+    Citizen.Wait(2000)
     ESX.RefreshJobs()
 end
-
 
 function changegradename(job, old_name, new_name, id)
     MySQL.Async.execute('UPDATE job_grades SET name = ? WHERE job_name = ? AND name = ?', { new_name, job, old_name })
@@ -82,4 +77,3 @@ function changegradelabel(job, old_label, new_label, id)
     MySQL.Async.execute('UPDATE job_grades SET label = ? WHERE job_name = ? AND label = ?', { new_label, job, old_label })
     ESX.RefreshJobs()
 end
-
