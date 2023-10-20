@@ -24,6 +24,7 @@ Config.DefaultMarker = { -- this is the default marker if you dont want to use t
   facecamera = false,
   markerenabled = true,
 }
+
 Config.NPC = true
 Config.Interactions = {
   ["cuff"] = {

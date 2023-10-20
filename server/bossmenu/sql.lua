@@ -1,14 +1,15 @@
 function getalljobinfo()
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs', {})
-return row
+    return row
 end
+
 sqlquery = false
 
 function updatejobinfo(name, markerred, markergreen, markerblue, markeralpha)
     print(name)
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
-   
+
     if markerred then
         jobinfo.markerred = markerred
     end
@@ -23,21 +24,22 @@ function updatejobinfo(name, markerred, markergreen, markerblue, markeralpha)
     end
     print(json.encode(jobinfo))
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-
 end
 
 function setbossmenu(job, value)
-    local row = MySQL.single.await('SELECT * FROM jobs WHERE `label` = ? LIMIT 1', {job})
+    local row = MySQL.single.await('SELECT * FROM jobs WHERE `label` = ? LIMIT 1', { job })
     if row then
         if row.ludaro_jobs_info then
             local ludaro_jobs_info = json.decode(row.ludaro_jobs_info)
             ludaro_jobs_info.bossmenu = value
-            local result = MySQL.update.await('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', {json.encode(ludaro_jobs_info), job})
-      
+            local result = MySQL.update.await('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?',
+                { json.encode(ludaro_jobs_info), job })
+
             return result or false
         else
-            local result = MySQL.update.await('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', {json.encode({bossmenu = value}), job})
-        
+            local result = MySQL.update.await('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?',
+                { json.encode({ bossmenu = value }), job })
+
             return result or false
         end
     else
@@ -45,9 +47,7 @@ function setbossmenu(job, value)
     end
 end
 
-
-
--- 
+--
 
 function setmarkerid(name, id)
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
@@ -105,8 +105,6 @@ function setmarkerzoffset(name, zoffset)
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
 end
 
-
-
 function setmarkerenabled(name, enabled)
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
@@ -121,15 +119,24 @@ function setmarkerfacecamera(name, value)
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
 end
 
+function setmarkercolor(name, r, g, b)
+    print(name)
+    local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
+    print(row)
+    print(ESX.DumpTable(row))
+    local jobinfo = json.decode(row[1].ludaro_jobs_info)
 
-
+    jobinfo.markerred = r or jobinfo.markerred or Config.DefaultMarker.red
+    jobinfo.markergreen = g or jobinfo.markergreen or Config.DefaultMarker.green
+    jobinfo.markerblue = b or jobinfo.markerblue or Config.DefaultMarker.blue
+    result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
+end
 
 function setnpcmodel(name, value)
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
     jobinfo.npcmodel = value
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-
 end
 
 function setxoffsetnpc(name, value)
@@ -137,7 +144,6 @@ function setxoffsetnpc(name, value)
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
     jobinfo.xoffsetnpc = value
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-
 end
 
 function setyoffsetnpc(name, value)
@@ -145,37 +151,26 @@ function setyoffsetnpc(name, value)
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
     jobinfo.yoffsetnpc = value
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-
 end
 
 function setzoffsetnpc(name, value)
-
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
     jobinfo.zoffsetnpc = value
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-
 end
 
 function setnpcheading(name, value)
-
-
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
     local jobinfo = json.decode(row[1].ludaro_jobs_info)
     jobinfo.npcheading = value
-   
-    result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
 
+    result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
 end
 
 function setnpcenabled(name, value)
-
-
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
-    local jobinfo = json.decode(row[1].ludaro_jobs_info) 
+    local jobinfo = json.decode(row[1].ludaro_jobs_info)
     jobinfo.npcenabled = value
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-
 end
-
-

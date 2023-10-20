@@ -46,9 +46,11 @@ client_scripts {
     "client/*.lua",
     "client/society/*.lua",
     "client/jobmenu/*.lua",
+    "client/bossmenu/threads/update.lua",
     "client/jobmenu/menu/*.lua",
     "client/bossmenu/*.lua",
     "client/bossmenu/menu/*.lua",
+    "client/bossmenu/threads/*.lua",
     "client/interactions/*.lua",
     "client/interactions/menu/*.lua"
 }

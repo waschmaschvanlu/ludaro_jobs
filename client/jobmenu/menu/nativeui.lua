@@ -334,7 +334,9 @@ if Config.Menu == "NativeUI" then
                     bossmenumenu.Item:RightLabel(">")
                     bossmenu = NativeUI.CreateItem(locale("bossmenucoords"), "")
                     bossmenumenu.SubMenu:AddItem(bossmenu)
-                    jobinfoo = "[]" or json.decode(v.jobinfo)
+
+                    jobinfoo = json.decode(v.jobinfo)
+
                     if Config.Marker then
                         marker = _menuPool:AddSubMenu(bossmenumenu.SubMenu, locale("marker"), "")
                         marker.Item:RightLabel(">")
@@ -376,13 +378,14 @@ if Config.Menu == "NativeUI" then
 
                         color = _menuPool:AddSubMenu(marker.SubMenu, locale("color"), "")
                         color.Item:RightLabel(">")
-                        red = NativeUI.CreateListItem(locale("red"), colors, 255 or jobinfoo.markerred, "")
+
+                        red = NativeUI.CreateListItem(locale("red"), colors, jobinfoo.markerred or 255, "")
                         color.SubMenu:AddItem(red)
-                        green = NativeUI.CreateListItem(locale("green"), colors, 255 or jobinfoo.markergreen, "")
+                        green = NativeUI.CreateListItem(locale("green"), colors, jobinfoo.markergreen or 255, "")
                         color.SubMenu:AddItem(green)
-                        blue = NativeUI.CreateListItem(locale("blue"), colors, 255 or jobinfoo.markerblue, "")
+                        blue = NativeUI.CreateListItem(locale("blue"), colors, jobinfoo.markerblue or 255, "")
                         color.SubMenu:AddItem(blue)
-                        alpha = NativeUI.CreateListItem(locale("alpha"), colors, 255 or jobinfoo.markeralpha, "")
+                        alpha = NativeUI.CreateListItem(locale("alpha"), colors, jobinfoo.markeralpha or 255, "")
                         color.SubMenu:AddItem(alpha)
                         coloritem = NativeUI.CreateItem(locale("color"), "")
 

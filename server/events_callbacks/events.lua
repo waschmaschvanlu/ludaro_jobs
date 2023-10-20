@@ -14,26 +14,26 @@ end)
 RegisterNetEvent('ludaro_jobs:deletejob')
 AddEventHandler('ludaro_jobs:deletejob', function(job_name)
     debug2("deleting job", 2)
-deletejob(job_name, source)
+    deletejob(job_name, source)
 end)
 
 RegisterNetEvent('ludaro_jobs:createsociety')
 AddEventHandler('ludaro_jobs:createsociety', function(job_name)
     debug2("creating society..", 2)
-created = createsociety(job_name, source)
---(created)
+    created = createsociety(job_name, source)
+    --(created)
 end)
 
 RegisterNetEvent('ludaro_jobs:addgrade')
 AddEventHandler('ludaro_jobs:addgrade', function(job_name, grades)
     debug2("creating grade", 2)
-addgrade(job_name, grades, source)
+    addgrade(job_name, grades, source)
 end)
 
 RegisterNetEvent('ludaro_jobs:deletegrade')
 AddEventHandler('ludaro_jobs:deletegrade', function(job_name, grade_name)
     debug2("creating grade", 2)
-deletegrade(job_name, grade_name, source)
+    deletegrade(job_name, grade_name, source)
 end)
 
 
@@ -41,7 +41,7 @@ RegisterNetEvent('ludaro_jobs:changename')
 AddEventHandler('ludaro_jobs:changename', function(old_name, new_name, grade)
     debug2("changing name", 2)
     if grade == nil then
-changename(old_name, new_name, source)
+        changename(old_name, new_name, source)
     else
         changegradename(old_name, new_name, grade, source)
     end
@@ -51,7 +51,7 @@ RegisterNetEvent('ludaro_jobs:labelch')
 AddEventHandler('ludaro_jobs:labelch', function(old_label, new_label, grade)
     debug2("changing label", 2)
     if grade == nil then
-changelabel(old_label, new_label, source)
+        changelabel(old_label, new_label, source)
     else
         changegradelabel(old_label, new_label, grade, source)
     end
@@ -76,20 +76,20 @@ end)
 RegisterNetEvent('ludaro_jobs:setmarkerred')
 AddEventHandler('ludaro_jobs:setmarkerred', function(job, value)
     debug2("changing marker red", 2)
-   updatejobinfo(job, value)
+    setmarkercolor(job, value, nil, nil)
 end)
 
 RegisterNetEvent('ludaro_jobs:setmarkergreen')
 AddEventHandler('ludaro_jobs:setmarkergreen', function(job, value)
     debug2("changing marker green", 2)
-    updatejobinfo(job, nil, value)
+    setmarkercolor(job, nil, value, nil)
 end)
 
 
 RegisterNetEvent('ludaro_jobs:setmarkerblue')
 AddEventHandler('ludaro_jobs:setmarkerblue', function(job, value)
     debug2("changing marker blue", 2)
-    updatejobinfo(job, nil, nil, value)
+    setmarkercolor(job, nil, nil, value)
 end)
 
 
@@ -204,5 +204,3 @@ AddEventHandler('ludaro_jobs:setnpcheading', function(job, value)
     debug2("changing npc heading", 2)
     setnpcheading(job, value)
 end)
-
-
