@@ -18,4 +18,6 @@ function consoleLog(msg, level)
     end
 end
 
+if Config.Debug ~= 0 then
 print("Ludaro Debugging Loaded check readme for debug commands and prints!")
+end

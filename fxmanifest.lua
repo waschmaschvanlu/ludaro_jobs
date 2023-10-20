@@ -67,7 +67,11 @@ server_script {
 }
 shared_scripts {
     '@ox_lib/init.lua',
+    "shared/debug.lua",
     "shared/*.lua",
+    "shared/interactions/*.lua",
+    "shared/jobmenu/*.lua",
+    "shared/bossmenu/*.lua"
 }
 
 requires {
