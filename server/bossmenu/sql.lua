@@ -84,26 +84,26 @@ function sql_setMarkerScaleZ(name, z)
     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
 end
 
-function sql_setMarkerXOffset(name, xoffset)
-    local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
-    local jobinfo = json.decode(row[1].ludaro_jobs_info)
-    jobinfo.xoffset = xoffset
-    result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-end
+-- function sql_setMarkerXOffset(name, xoffset)
+--     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
+--     local jobinfo = json.decode(row[1].ludaro_jobs_info)
+--     jobinfo.xoffset = xoffset
+--     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
+-- end
 
-function sql_setMarkerYOffset(name, yoffset)
-    local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
-    local jobinfo = json.decode(row[1].ludaro_jobs_info)
-    jobinfo.yoffset = yoffset
-    result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-end
+-- function sql_setMarkerYOffset(name, yoffset)
+--     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
+--     local jobinfo = json.decode(row[1].ludaro_jobs_info)
+--     jobinfo.yoffset = yoffset
+--     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
+-- end
 
-function sql_setMarkerZOffset(name, zoffset)
-    local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
-    local jobinfo = json.decode(row[1].ludaro_jobs_info)
-    jobinfo.zoffset = zoffset
-    result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
-end
+-- function sql_setMarkerZOffset(name, zoffset)
+--     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })
+--     local jobinfo = json.decode(row[1].ludaro_jobs_info)
+--     jobinfo.zoffset = zoffset
+--     result = MySQL.Async.execute('UPDATE jobs SET ludaro_jobs_info = ? WHERE label = ?', { json.encode(jobinfo), name })
+-- end
 
 function sql_setMarkerEnabled(name, enabled)
     local row = MySQL.query.await('SELECT ludaro_jobs_info FROM jobs WHERE label = ?', { name })

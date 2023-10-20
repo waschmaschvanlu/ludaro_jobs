@@ -41,9 +41,9 @@ RegisterNetEvent('ludaro_jobs:changename')
 AddEventHandler('ludaro_jobs:changename', function(old_name, new_name, grade)
     consoleLog("changing name", 2)
     if grade == nil then
-        changename(old_name, new_name, source)
+        interactions_sql_changeName(old_name, new_name, source)
     else
-        changegradename(old_name, new_name, grade, source)
+        interactions_sql_changeGradeName(old_name, new_name, grade, source)
     end
 end)
 
@@ -51,9 +51,9 @@ RegisterNetEvent('ludaro_jobs:labelch')
 AddEventHandler('ludaro_jobs:labelch', function(old_label, new_label, grade)
     consoleLog("changing label", 2)
     if grade == nil then
-        changelabel(old_label, new_label, source)
+        interactions_sql_changeLabel(old_label, new_label, source)
     else
-        changegradelabel(old_label, new_label, grade, source)
+        interactions_sql_changeGradeLabel(old_label, new_label, grade, source)
     end
 end)
 

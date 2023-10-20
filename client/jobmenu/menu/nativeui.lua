@@ -367,15 +367,15 @@ if Config.Menu == "NativeUI" then
                         scale.SubMenu:AddItem(scalez)
 
 
-                        offset = _menuPool:AddSubMenu(marker.SubMenu, framework_locale("offset"), "")
-                        offset.Item:RightLabel(">")
+                        -- offset = _menuPool:AddSubMenu(marker.SubMenu, framework_locale("offset"), "")
+                        -- offset.Item:RightLabel(">")
 
-                        xoffset = NativeUI.CreateItem(framework_locale("xoffset"), "")
-                        offset.SubMenu:AddItem(xoffset)
-                        yoffset = NativeUI.CreateItem(framework_locale("yoffset"), "")
-                        offset.SubMenu:AddItem(yoffset)
-                        zoffset = NativeUI.CreateItem(framework_locale("zoffset"), "")
-                        offset.SubMenu:AddItem(zoffset)
+                        -- xoffset = NativeUI.CreateItem(framework_locale("xoffset"), "")
+                        -- offset.SubMenu:AddItem(xoffset)
+                        -- yoffset = NativeUI.CreateItem(framework_locale("yoffset"), "")
+                        -- offset.SubMenu:AddItem(yoffset)
+                        -- zoffset = NativeUI.CreateItem(framework_locale("zoffset"), "")
+                        -- offset.SubMenu:AddItem(zoffset)
 
 
                         color = _menuPool:AddSubMenu(marker.SubMenu, framework_locale("color"), "")
@@ -745,18 +745,18 @@ if Config.Menu == "NativeUI" then
                                 TriggerServerEvent("ludaro_jobs:setmarkerscalez", v.job, v.scalez)
                                 Citizen.Wait(1000)
                             end
-                            if v.xoffset then
-                                TriggerServerEvent("ludaro_jobs:setmarkerxoffset", v.job, v.xoffset)
-                                Citizen.Wait(1000)
-                            end
-                            if v.yoffset then
-                                TriggerServerEvent("ludaro_jobs:setmarkeryoffset", v.job, v.yoffset)
-                                Citizen.Wait(1000)
-                            end
-                            if v.zoffset then
-                                TriggerServerEvent("ludaro_jobs:setmarkerzoffset", v.job, v.zoffset)
-                                Citizen.Wait(1000)
-                            end
+                            -- if v.xoffset then
+                            --     TriggerServerEvent("ludaro_jobs:setmarkerxoffset", v.job, v.xoffset)
+                            --     Citizen.Wait(1000)
+                            -- end
+                            -- if v.yoffset then
+                            --     TriggerServerEvent("ludaro_jobs:setmarkeryoffset", v.job, v.yoffset)
+                            --     Citizen.Wait(1000)
+                            -- end
+                            -- if v.zoffset then
+                            --     TriggerServerEvent("ludaro_jobs:setmarkerzoffset", v.job, v.zoffset)
+                            --     Citizen.Wait(1000)
+                            -- end
                             if v.markerenabled then
                                 TriggerServerEvent("ludaro_jobs:setmarkerenabled", v.job, v.markerenabled)
                                 Citizen.Wait(1000)

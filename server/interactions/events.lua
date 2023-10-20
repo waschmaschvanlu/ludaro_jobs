@@ -9,7 +9,7 @@ end)
 RegisterNetEvent('ludaro_jobs:addinteraction')
 AddEventHandler('ludaro_jobs:addinteraction', function(job_name, interaction_name)
     consoleLog("adding interaction", 2)
-    addinteractions(job_name, nametolabel(interaction_name), source)
+    interactions_sql_addInteractions(job_name, nametolabel(interaction_name), source)
 end)
 
 
@@ -17,7 +17,7 @@ end)
 RegisterNetEvent('ludaro_jobs:removeinteraction')
 AddEventHandler('ludaro_jobs:removeinteraction', function(job_name, interaction_name)
     consoleLog("remove interaction", 2)
-    removeinteractions(job_name, nametolabel(interaction_name))
+    interactions_sql_removeInteractions(job_name, nametolabel(interaction_name))
 end)
 
 function nametolabel(name)

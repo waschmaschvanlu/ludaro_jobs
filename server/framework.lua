@@ -27,3 +27,7 @@ function table.contains(table, element)
     end
     return false
 end
+
+function framework_getPlayer(source)
+    return ESX.GetPlayerFromId(source)
+end

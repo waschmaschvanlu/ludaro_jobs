@@ -31,15 +31,15 @@ end)
 
 
 lib.callback.register('ludaro_jobs:getgrade', function(source, id)
-    return ESX.GetPlayerFromId(id or source).job.grade
+    return framework_getPlayer(id or source).job.grade
 end)
 
 lib.callback.register('ludaro_jobs:getjoblabel', function(source, id)
-    return ESX.GetPlayerFromId(id or source).job.label
+    return framework_getPlayer(id or source).job.label
 end)
 
 lib.callback.register('ludaro_jobs:getgradename', function(source, id)
-    return ESX.GetPlayerFromId(id or source).job.grade_name
+    return framework_getPlayer(id or source).job.grade_name
 end)
 
 lib.callback.register('ludaro_jobs:getjobname', function(source, id)
@@ -61,7 +61,7 @@ end)
 
 -- INTERACTIONS
 lib.callback.register('ludaro_jobs:getinteractions', function(source, job)
-    return getinteractions(job)
+    return interactions_sql_getInteractions(job)
 end)
 
 lib.callback.register('ludaro_jobs:getwhitelist', function(source, job)

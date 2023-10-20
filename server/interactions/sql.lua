@@ -1,4 +1,4 @@
-function getinteractions(name)
+function interactions_sql_getInteractions(name)
     local row = MySQL.single.await('SELECT interactions FROM jobs WHERE `name` = ? LIMIT 1', { name })
     print(row == "[]")
     if row == "[]" then
@@ -8,8 +8,8 @@ function getinteractions(name)
     end
 end
 
-function addinteractions(name, value)
-    interactions = getinteractions(name)
+function interactions_sql_addInteractions(name, value)
+    interactions = interactions_sql_getInteractions(name)
     print(interactions)
     if tonumber(interactions) ~= 0 or interactions == false or interactions == true or #interactions ~= 0 then
         local decodedInteractions = {} or json.decode(interactions)
@@ -26,8 +26,8 @@ function addinteractions(name, value)
     MySQL.Async.execute('UPDATE jobs SET interactions = ? WHERE name = ?', { interactions, name })
 end
 
-function removeinteractions(name, value)
-    interactions = getinteractions(name)
+function interactions_sql_removeInteractions(name, value)
+    interactions = interactions_sql_getInteractions(name)
     if value == "all" then
         interactions = json.encode({})
     else
@@ -46,13 +46,13 @@ function removeinteractions(name, value)
     MySQL.Async.execute('UPDATE jobs SET interactions = ? WHERE name = ?', { interactions, name })
 end
 
-function changelabel(old_label, new_label)
+function interactions_sql_changeLabel(old_label, new_label)
     MySQL.Async.execute('UPDATE jobs SET label = ? WHERE label = ?', { new_label, old_label })
 
     ESX.RefreshJobs()
 end
 
-function changename(old_name, new_name)
+function interactions_sql_changeName(old_name, new_name)
     MySQL.Async.execute('UPDATE jobs SET name = ? WHERE name = ?', { new_name, old_name })
     MySQL.Async.execute('UPDATE job_grades SET job_name = ? WHERE job_name = ?', { new_name, old_name })
     MySQL.Async.execute('UPDATE users SET job = ? WHERE job = ?', { new_name, old_name })
@@ -68,12 +68,12 @@ function changename(old_name, new_name)
     ESX.RefreshJobs()
 end
 
-function changegradename(job, old_name, new_name, id)
+function interactions_sql_changeGradeName(job, old_name, new_name, id)
     MySQL.Async.execute('UPDATE job_grades SET name = ? WHERE job_name = ? AND name = ?', { new_name, job, old_name })
     ESX.RefreshJobs()
 end
 
-function changegradelabel(job, old_label, new_label, id)
+function interactions_sql_changeGradeLabel(job, old_label, new_label, id)
     MySQL.Async.execute('UPDATE job_grades SET label = ? WHERE job_name = ? AND label = ?', { new_label, job, old_label })
     ESX.RefreshJobs()
 end
