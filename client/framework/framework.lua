@@ -17,7 +17,7 @@ function cb_isAdmin()
     return lib.table.contains(Config.AdminGroups, cb_getGroup())
 end
 
-function locale(msg)
+function framework_locale(msg)
     local translation = Config.Translation[Config.Locale][msg]
     if translation then
         return translation
